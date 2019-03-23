@@ -67,7 +67,13 @@ public class Paddle
         speed = 0;
     }
 
-    public void update(float dTime) {
+    public void update(float dTime, int windowHeight) {
 	y = y + (speed * dTime);
+	if (y < 0) {
+	    y = 0;
+	}
+	else if (y + height > windowHeight) {
+	    y = windowHeight - height;
+	}
     }
 }

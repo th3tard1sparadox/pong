@@ -30,9 +30,9 @@ public class Game extends JComponent
         setupKeyInput();
     }
 
-    public void centeredString(Graphics g, String text, Rectangle rect, int y, Font font) {
+    public void rightString(Graphics g, String text, Rectangle rect, int y, Font font) {
         FontMetrics metrics = g.getFontMetrics(font);
-        int x = rect.x + (rect.width - metrics.stringWidth(text)) / 2;
+        int x = rect.x + (rect.width - metrics.stringWidth(text));
         g.setFont(font);
         g.drawString(text, x, y);
     }
@@ -54,7 +54,9 @@ public class Game extends JComponent
         imgG.fillRect((int) rightPaddle.getX(), (int) rightPaddle.getY(), rightPaddle.getWidth(), rightPaddle.getHeight());
         imgG.setColor(leftPaddle.getColor());
         imgG.fillRect((int) leftPaddle.getX(), (int) leftPaddle.getY(), leftPaddle.getWidth(), leftPaddle.getHeight());
-        centeredString(imgG, leftPaddle.getScore() + " " + rightPaddle.getScore(), new Rectangle(WINDOW_WIDTH, WINDOW_HEIGHT), 40, new Font("Symbol", Font.PLAIN, 30));
+        rightString(imgG, leftPaddle.getScore() + " ", new Rectangle(WINDOW_WIDTH/2, WINDOW_HEIGHT), 40, new Font("Symbol", Font.PLAIN, 30));
+        imgG.setFont(new Font("Symbol", Font.PLAIN, 30));
+        imgG.drawString(" " + rightPaddle.getScore(), WINDOW_WIDTH/2, 40);
     }
 
     public void start() {
@@ -71,8 +73,8 @@ public class Game extends JComponent
 
     public void update(float dTime) {
         ball.update(dTime, rightPaddle, leftPaddle, WINDOW_HEIGHT, WINDOW_WIDTH);
-        rightPaddle.update(dTime);
-        leftPaddle.update(dTime);
+        rightPaddle.update(dTime, WINDOW_HEIGHT);
+        leftPaddle.update(dTime, WINDOW_HEIGHT);
         if (ball.isLost()) {
             if (ball.getX() < WINDOW_WIDTH/2) {
                 rightPaddle.setScore(rightPaddle.getScore() + 1);
