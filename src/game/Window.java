@@ -3,7 +3,7 @@ package game;
 import javax.swing.*;
 import java.awt.*;
 
-public class window
+public class Window
 {
     private static void createAndShowWindow() {
 	Game game = new Game();

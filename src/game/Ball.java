@@ -11,8 +11,8 @@ public class Ball
     private float angle;
     private int size;
     private Color color;
-    private float MAX = 30f;
-    private float MIN = -30f;
+    private static float MAX_ANGLE = 30f;
+    private static float MIN_ANGLE = -30f;
     private boolean lost = false;
 
     public boolean isLost() {
@@ -51,11 +51,11 @@ public class Ball
         return (float) Math.toRadians(degrees);
     }
 
-    public void setRandColor() {
-        int r = generator.nextInt(256);
-	int g = generator.nextInt(256);
-	int b = generator.nextInt(256);
-        color = new Color(r, g, b);
+    public void randColor() {
+        float h = generator.nextFloat();
+	float s = generator.nextFloat();
+	float b = (generator.nextFloat() * (1f - 0.25f) + 0.25f);
+        color = new Color(Color.HSBtoRGB(h, s, b));
     }
 
     public boolean lost(int windowWidth) {
@@ -66,8 +66,10 @@ public class Ball
     }
 
     public void bounceCheckPaddle(Paddle paddle) {
-	if (x >= paddle.getX() && x <= paddle.getX() + paddle.getWidth() && y >= paddle.getY() &&
-	    y <= paddle.getY() + paddle.getHeight()) {
+	if ((x >= paddle.getX() || x + size >= paddle.getX()) &&
+	    (x <= paddle.getX() + paddle.getWidth() || x + size <= paddle.getX() + paddle.getWidth()) &&
+	    (y >= paddle.getY() || y + size >= paddle.getY()) &&
+	    (y <= paddle.getY() + paddle.getHeight() || y + size <= paddle.getY() + paddle.getHeight())) {
 	    	float pos = (float) (paddle.getHeight()/2) - (y - paddle.getY());
 		bounce(false, pos, paddle.getHeight(), paddle.getDir());
 	}
@@ -84,25 +86,17 @@ public class Ball
 	    angle = -angle;
 	}
         else {
-            if (pos <= paddleHeight/6 || pos >= -paddleHeight/6) {
-		speed = randSpeed(300, 260);
-	    }
-            else if (pos <= paddleHeight/3 || pos >= -paddleHeight/3) {
-		speed = randSpeed(240, 190);
-	    }
-            else {
-		speed = randSpeed(150, 100);
-	    }
+            speed = (int) (150 + Math.abs(pos) / paddleHeight * 550);
             angle = (float) Math.toRadians(90f + dir * (90f + pos / paddleHeight * 120f));
 	}
-	setRandColor();
+	randColor();
     }
 
     public void respawn(int x, int y) {
 	this.x = x;
 	this.y = y;
 	speed = randSpeed(300, 100);
-	angle = randAngle(MAX, MIN);
+	angle = randAngle(MAX_ANGLE, MIN_ANGLE);
 	color = Color.white;
 	lost = false;
     }

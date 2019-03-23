@@ -30,6 +30,13 @@ public class Game extends JComponent
         setupKeyInput();
     }
 
+    public void centeredString(Graphics g, String text, Rectangle rect, int y, Font font) {
+        FontMetrics metrics = g.getFontMetrics(font);
+        int x = rect.x + (rect.width - metrics.stringWidth(text)) / 2;
+        g.setFont(font);
+        g.drawString(text, x, y);
+    }
+
     @Override public Dimension getPreferredSize() {
 	return new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT);
     }
@@ -47,6 +54,7 @@ public class Game extends JComponent
         imgG.fillRect((int) rightPaddle.getX(), (int) rightPaddle.getY(), rightPaddle.getWidth(), rightPaddle.getHeight());
         imgG.setColor(leftPaddle.getColor());
         imgG.fillRect((int) leftPaddle.getX(), (int) leftPaddle.getY(), leftPaddle.getWidth(), leftPaddle.getHeight());
+        centeredString(imgG, leftPaddle.getScore() + " " + rightPaddle.getScore(), new Rectangle(WINDOW_WIDTH, WINDOW_HEIGHT), 40, new Font("Symbol", Font.PLAIN, 30));
     }
 
     public void start() {
@@ -66,6 +74,12 @@ public class Game extends JComponent
         rightPaddle.update(dTime);
         leftPaddle.update(dTime);
         if (ball.isLost()) {
+            if (ball.getX() < WINDOW_WIDTH/2) {
+                rightPaddle.setScore(rightPaddle.getScore() + 1);
+            }
+            else {
+                leftPaddle.setScore(leftPaddle.getScore() + 1);
+            }
             ball.respawn(WINDOW_WIDTH/2 - BALL_SIZE/2, WINDOW_HEIGHT/2 - BALL_SIZE/2);
         }
     }

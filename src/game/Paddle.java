@@ -11,6 +11,15 @@ public class Paddle
     private Color color;
     private int speed;
     private int dir;
+    private int score;
+
+    public void setScore(int s) {
+        score = s;
+    }
+
+    public int getScore() {
+        return score;
+    }
 
     public float getX() {
 	return x;
@@ -43,14 +52,15 @@ public class Paddle
 	this.height = height;
 	color = Color.white;
 	this.dir = dir;
+	score = 0;
     }
 
     public void moveUp() {
-        speed = -220;
+        speed = -250;
     }
 
     public void moveDown() {
-        speed = 220;
+        speed = 250;
     }
 
     public void stop() {
