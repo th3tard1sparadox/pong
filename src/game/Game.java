@@ -20,6 +20,7 @@ public class Game extends JComponent
     private Ball ball;
     private Paddle rightPaddle;
     private Paddle leftPaddle;
+    private Ai ai;
 
     public Game() {
         ball = new Ball(WINDOW_WIDTH/2 - BALL_SIZE/2, WINDOW_HEIGHT/2 - BALL_SIZE/2, BALL_SIZE);
@@ -28,6 +29,7 @@ public class Game extends JComponent
         image = new BufferedImage(WINDOW_WIDTH, WINDOW_HEIGHT, BufferedImage.TYPE_INT_RGB);
         imgG = image.getGraphics();
         setupKeyInput();
+        ai = new Ai(ball, leftPaddle);
     }
 
     public void rightString(Graphics g, String text, Rectangle rect, int y, Font font) {
@@ -73,6 +75,8 @@ public class Game extends JComponent
 
     public void update(float dTime) {
         ball.update(dTime, rightPaddle, leftPaddle, WINDOW_HEIGHT, WINDOW_WIDTH);
+        //ai.updateEasy();
+        ai.updateHard();
         rightPaddle.update(dTime, WINDOW_HEIGHT);
         leftPaddle.update(dTime, WINDOW_HEIGHT);
         if (ball.isLost()) {
@@ -97,12 +101,12 @@ public class Game extends JComponent
                     rightPaddle.moveDown();
                 }
 
-                if (key == keyEvent.VK_W) {
+                /*if (key == keyEvent.VK_W) {
                     leftPaddle.moveUp();
                 }
                 else if (key == keyEvent.VK_S) {
                     leftPaddle.moveDown();
-                }
+                }*/
             }
 
             @Override public void keyReleased(final KeyEvent keyEvent) {
@@ -111,9 +115,9 @@ public class Game extends JComponent
                     rightPaddle.stop();
                 }
 
-                if (key == keyEvent.VK_W || key == keyEvent.VK_S) {
+                /*if (key == keyEvent.VK_W || key == keyEvent.VK_S) {
                     leftPaddle.stop();
-                }
+                }*/
             }
 
             @Override public void keyTyped(final KeyEvent keyEvent) {}
