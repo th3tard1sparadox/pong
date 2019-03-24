@@ -53,8 +53,8 @@ public class Ball
 
     public void randColor() {
         float h = generator.nextFloat();
-	float s = generator.nextFloat();
-	float b = (generator.nextFloat() * (1f - 0.25f) + 0.25f);
+	float s = generator.nextFloat() * (1f - 0.6f) + 0.6f;
+	float b = generator.nextFloat() * (1f - 0.6f) + 0.6f;
         color = new Color(Color.HSBtoRGB(h, s, b));
     }
 
