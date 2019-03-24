@@ -33,13 +33,14 @@ public class Ai
         float m = ball.getY() - k * ball.getX();
         float goalPos =  k * paddle.getX() + m;
 	if (ball.getX() <= prevX) {
-	    if (goalPos > paddle.getY() + paddle.getHeight() / 4) {
-		paddle.moveDown();
-	    } else if (goalPos < paddle.getY() + paddle.getHeight() * 3 / 4) {
-		paddle.moveUp();
+	    if (goalPos > paddle.getY() && goalPos < paddle.getY() + paddle.getHeight()) {
+		paddle.stop();
 	    }
-	    else {
-	        paddle.stop();
+	    else if (goalPos >= paddle.getY() + paddle.getHeight() / 5) {
+		paddle.moveDown();
+	    }
+	    else if (goalPos <= paddle.getY() + paddle.getHeight() * 4 / 5) {
+		paddle.moveUp();
 	    }
 	}
 	else {
