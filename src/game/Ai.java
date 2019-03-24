@@ -15,16 +15,16 @@ public class Ai
     }
 
     public void updateEasy() {
-        if (ball.getX() <= prevX) {
+        //if (ball.getX() <= prevX) {
 	    if (ball.getY() > paddle.getY() + paddle.getHeight() / 4) {
 		paddle.moveDown();
 	    } else if (ball.getY() < paddle.getY() + paddle.getHeight() * 3 / 4) {
 		paddle.moveUp();
 	    }
-	}
+	/*}
         else {
             paddle.stop();
-	}
+	}*/
         prevX = ball.getX();
     }
 
@@ -32,7 +32,7 @@ public class Ai
         float k = (prevY - ball.getY()) / (prevX - ball.getX());
         float m = ball.getY() - k * ball.getX();
         float goalPos =  k * paddle.getX() + m;
-	if (ball.getX() <= prevX) {
+	//if (ball.getX() <= prevX) {
 	    if (goalPos > paddle.getY() && goalPos < paddle.getY() + paddle.getHeight()) {
 		paddle.stop();
 	    }
@@ -42,10 +42,10 @@ public class Ai
 	    else if (goalPos <= paddle.getY() + paddle.getHeight() * 4 / 5) {
 		paddle.moveUp();
 	    }
-	}
+	/*}
 	else {
 	    paddle.stop();
-	}
+	}*/
 	prevX = ball.getX();
 	prevY = ball.getY();
     }

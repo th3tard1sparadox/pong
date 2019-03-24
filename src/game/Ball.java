@@ -70,13 +70,19 @@ public class Ball
 	    (x <= paddle.getX() + paddle.getWidth() || x + size <= paddle.getX() + paddle.getWidth()) &&
 	    (y >= paddle.getY() || y + size >= paddle.getY()) &&
 	    (y <= paddle.getY() + paddle.getHeight() || y + size <= paddle.getY() + paddle.getHeight())) {
-	    	float pos = (float) (paddle.getHeight()/2) - (y - paddle.getY());
+	    	float pos = (float) (paddle.getHeight() / 2) - (y + size / 2 - paddle.getY());
+	    	if (pos > paddle.getHeight() / 2) {
+	    	    pos = paddle.getHeight() / 2;
+		}
+	    	else if (pos < -paddle.getHeight() / 2) {
+	    	    pos = -paddle.getHeight() / 2;
+		}
 		bounce(false, pos, paddle.getHeight(), paddle.getDir());
 	}
     }
 
     public void bounceCheckWall(int windowHeight) {
-	if (y <= 0 || y >= windowHeight) {
+	if (y <= 0 || y >= windowHeight - size) {
 	    bounce(true, 0, 0, 0);
 	}
     }

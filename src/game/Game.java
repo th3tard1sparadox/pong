@@ -20,7 +20,8 @@ public class Game extends JComponent
     private Ball ball;
     private Paddle rightPaddle;
     private Paddle leftPaddle;
-    private Ai ai;
+    private Ai ai1;
+    private Ai ai2;
 
     public Game() {
         ball = new Ball(WINDOW_WIDTH/2 - BALL_SIZE/2, WINDOW_HEIGHT/2 - BALL_SIZE/2, BALL_SIZE);
@@ -29,7 +30,8 @@ public class Game extends JComponent
         image = new BufferedImage(WINDOW_WIDTH, WINDOW_HEIGHT, BufferedImage.TYPE_INT_RGB);
         imgG = image.getGraphics();
         setupKeyInput();
-        ai = new Ai(ball, leftPaddle);
+        ai1 = new Ai(ball, leftPaddle);
+        ai2 = new Ai(ball, rightPaddle);
     }
 
     public void rightString(Graphics g, String text, Rectangle rect, int y, Font font) {
@@ -75,8 +77,8 @@ public class Game extends JComponent
 
     public void update(float dTime) {
         ball.update(dTime, rightPaddle, leftPaddle, WINDOW_HEIGHT, WINDOW_WIDTH);
-        //ai.updateEasy();
-        ai.updateHard();
+        ai1.updateHard();
+        ai2.updateHard();
         rightPaddle.update(dTime, WINDOW_HEIGHT);
         leftPaddle.update(dTime, WINDOW_HEIGHT);
         if (ball.isLost()) {
