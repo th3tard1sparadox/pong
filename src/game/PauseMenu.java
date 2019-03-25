@@ -36,13 +36,14 @@ public class PauseMenu
 
     public void selectUp() {
 	underlined.set(selectItem, Font.PLAIN);
-	selectItem = (selectItem - 1) % 4;
+	selectItem = Math.floorMod((selectItem - 1),  4);
+        System.out.println(selectItem);
 	underlined.set(selectItem, Font.BOLD);
     }
 
     public void selectDown() {
 	underlined.set(selectItem, Font.PLAIN);
-	selectItem = (selectItem + 1) % 4;
+	selectItem = Math.floorMod((selectItem + 1), 4);
 	underlined.set(selectItem, Font.BOLD);
     }
 
